@@ -1,28 +1,18 @@
-// import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Header from './components/Header/Header.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
+import Profile from './components/Profile/Profile.jsx';
+import Dialogs from './components/Dialogs/Dialogs.jsx';
 
 const App = () => {
   return (
     <div className="app-wrapper">
-      <header>
-        <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/7/7a/Manchester_United_FC_crest.svg/1010px-Manchester_United_FC_crest.svg.png"></img>
-      </header>
-      <nav>
-        <div>
-          <a>first</a>
-        </div>
-        <div>
-          <a>second</a>
-        </div>
-        <div>
-          <a>third</a>
-        </div>
-        <div>
-          <a>four</a>
-        </div>
-      </nav>
-      <div>
-        content
+      <Header/>
+      <Navbar/>
+      <div className="app-wrapper-content">
+        <Dialogs/>
+        {/* <Profile /> */}
       </div>
     </div>
   );
