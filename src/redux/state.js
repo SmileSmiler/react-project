@@ -1,3 +1,8 @@
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const UPDATE_NEW_MASSAGE_BODY = 'UPDATE-NEW-MASSAGE-BODY'
+const SEND_MESSAGE = 'SEND-MESSAGE'
+
 let store = {
   _state: {
     profilePage: {
@@ -22,34 +27,69 @@ let store = {
         { id: 3, message: 'text03' },
         { id: 4, message: 'text04' },
         { id: 5, message: 'text05' }
-      ]
-    }
-  },
-  getState() {
-    return this._state;
+      ],
+      newMassageBody: ""
+    },
+    sidebar: {}
   },
   _callSubscriber() {
     console.log("state changed")
   },
-  addPost() {
-    // debugger
-    let newPost = {
-      id: 5,
-      message: this._state.profilePage.newPostText,
-      likesCount: 0
-    };
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.newPostText = '';
-    this._callSubscriber(this._state)
-  },
-  updateNewPostText(newText) {
-    this._state.profilePage.newPostText = newText;
-    this._callSubscriber(this._state)
+
+  getState() {
+    return this._state;
   },
   subscribe(observer) {
     this._callSubscriber = observer;
+  },
+
+  dispatch(action) {
+    switch (action.type) {
+      case 'ADD-POST':
+        let newPost = {
+          id: 5,
+          message: this._state.profilePage.newPostText,
+          likesCount: 0
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = '';
+        this._callSubscriber(this._state)
+        break;
+      case 'UPDATE-NEW-POST-TEXT':
+        this._state.profilePage.newPostText = action.newText;
+        this._callSubscriber(this._state)
+        break;
+      case 'SEND-MESSAGE':
+        let newMassage = {
+          id: 6, 
+          message: this._state.dialogsPage.newMassageBody
+        }
+        this._state.dialogsPage.messages.push(newMassage)
+        this._state.dialogsPage.newMassageBody = '';
+        this._callSubscriber(this._state)
+        break;
+      case 'UPDATE-NEW-MASSAGE-BODY':
+        this._state.dialogsPage.newMassageBody = action.newBody;
+        this._callSubscriber(this._state)
+        break;
+    }
   }
 }
+
+export const addPostCreator = () => ({
+  type: ADD_POST
+})
+export const updateNewPostTextCreator = (text) => ({
+  type: UPDATE_NEW_POST_TEXT,
+  newText: text
+})
+export const updateNewMassageBodyCreator = (body) => ({
+  type: UPDATE_NEW_MASSAGE_BODY,
+  newBody: body
+})
+export const sendMassageCreator = () => ({
+  type: SEND_MESSAGE
+})
 
 export default store
 window.store = store
